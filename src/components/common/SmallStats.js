@@ -10,7 +10,7 @@ class SmallStats extends React.Component {
   constructor(props) {
     super(props);
 
-    this.canvasRef = React.createRef();
+    //this.canvasRef = React.createRef(); // create reference for itself when instantiated
   }
 
   componentDidMount() {
@@ -76,13 +76,13 @@ class SmallStats extends React.Component {
       ...this.props.chartConfig
     };
 
-    new Chart(this.canvasRef.current, chartConfig);
+    //new Chart(this.canvasRef.current, chartConfig); // using it's reference create new chart
   }
 
   render() {
     const { variation, label, value, percentage, increase } = this.props;
 
-    const cardClasses = classNames(
+    const cardClasses = classNames( // dynamically construct class names
       "stats-small",
       variation && `stats-small--${variation}`
     );
@@ -115,15 +115,15 @@ class SmallStats extends React.Component {
 
     const innerDataFieldClasses = classNames(
       "stats-small__data",
-      variation !== "1" && "text-right align-items-center"
+      variation !== "1" && "text-right align-items-center" // this can return false and the classname won't even appear. This is the magic of the library
     );
 
-    const percentageClasses = classNames(
-      "stats-small__percentage",
-      `stats-small__percentage--${increase ? "increase" : "decrease"}`
-    );
+    // const percentageClasses = classNames(
+    //   "stats-small__percentage",
+    //   `stats-small__percentage--${increase ? "increase" : "decrease"}`
+    // );
 
-    const canvasHeight = variation === "1" ? 120 : 60;
+    //const canvasHeight = variation === "1" ? 120 : 60;
 
     return (
       <Card small className={cardClasses}>
@@ -134,14 +134,14 @@ class SmallStats extends React.Component {
               <h6 className={valueClasses}>{value}</h6>
             </div>
             <div className={innerDataFieldClasses}>
-              <span className={percentageClasses}>{percentage}</span>
+              {/*<span className={percentageClasses}>{percentage}</span>*/}
             </div>
           </div>
-          <canvas
-            height={canvasHeight}
-            ref={this.canvasRef}
-            className={`stats-small-${shortid()}`}
-          />
+          {/*<canvas*/}
+          {/*  height={canvasHeight}*/}
+          {/*  ref={this.canvasRef} // add reference to dom element*/}
+          {/*  className={`stats-small-${shortid()}`}*/}
+          {/*/>*/}
         </CardBody>
       </Card>
     );

@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import { DefaultLayout } from "./layouts";
 
 // Route Views
-import BlogOverview from "./views/BlogOverview";
+import SongOverview from "./views/SongOverview";
 import UserProfileLite from "./views/UserProfileLite";
 import AddNewPost from "./views/AddNewPost";
 import Errors from "./views/Errors";
@@ -23,7 +23,7 @@ export default [
   {
     path: "/blog-overview",
     layout: DefaultLayout,
-    component: BlogOverview
+    component: SongOverview
   },
   {
     path: "/user-profile-lite",
