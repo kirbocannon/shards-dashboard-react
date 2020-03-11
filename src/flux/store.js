@@ -50,4 +50,9 @@ class Store extends EventEmitter {
   }
 }
 
-export default new Store();
+// testing
+//const str = new Store()
+//window.str = str
+//export default str;
+
+export default new Store()
