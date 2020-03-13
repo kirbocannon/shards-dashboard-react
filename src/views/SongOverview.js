@@ -15,7 +15,10 @@ class SongOverview extends React.Component {
   constructor() {
     super()
 
+    SongStore.getAll().then(response => {console.log(response)})
+
     this.state = {
+      //smallStats: SongStore.getAll()
       smallStats: [
         {
           label: "Songs",
