@@ -59,9 +59,9 @@ class SongStore extends EventEmitter {
     )
   }
 
-  getPlaylists() {
+  getPlaylists(limit, offset) {
     return (axios.get(
-      `https://api.spotify.com/v1/users/${this.userId}/playlists`,
+      `https://api.spotify.com/v1/users/${this.userId}/playlists?limit=${limit}&offset=${offset}`, // make api call builder
       {headers: {'Authorization': `Bearer ${this._accessToken}` }
       })
     )
@@ -70,11 +70,52 @@ class SongStore extends EventEmitter {
   async getAll() {
     try {
       const tokenResp = await this.getToken()
-      const playlistsResp = await this.getPlaylists()
-      return 'balls1'
+      const playlistsResp = await this.getPlaylists(constants.SPOTIFY_LIMIT, 0)
+      const playlists = []
+      let currentOffset = 0
+      let next = playlistsResp.data.next
+      let totalTracks = 0
+
+      playlists.push(...playlistsResp.data.items)
+
+      while (next) {
+        currentOffset += constants.SPOTIFY_LIMIT
+        let playlistsResp = await this.getPlaylists(constants.SPOTIFY_LIMIT, currentOffset)
+        playlists.push(...playlistsResp.data.items)
+        next = playlistsResp.data.next
+      }
+
+      playlists.forEach(playlist => {
+        totalTracks += playlist.tracks.total
+      })
+
+      return [
+        {
+          label: "Songs",
+          value: totalTracks,
+          percentage: "4.7%",
+          increase: true,
+          chartLabels: [null, null, null, null, null, null, null],
+          attrs: { md: "6", sm: "6" },
+          datasets: [
+            {
+              label: "Today",
+              fill: "start",
+              borderWidth: 1.5,
+              backgroundColor: "rgba(0, 184, 216, 0.1)",
+              borderColor: "rgb(0, 184, 216)",
+              data: [1, 2, 1, 3, 5, 4, 7]
+            }
+          ]
+        }
+      ]
+
     } catch (error) {
       console.error(error);
     }
+
+
+
 
   }
 }

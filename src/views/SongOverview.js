@@ -15,31 +15,37 @@ class SongOverview extends React.Component {
   constructor() {
     super()
 
-    SongStore.getAll().then(response => {console.log(response)})
-
     this.state = {
-      //smallStats: SongStore.getAll()
-      smallStats: [
-        {
-          label: "Songs",
-          value: "3,391",
-          percentage: "4.7%",
-          increase: true,
-          chartLabels: [null, null, null, null, null, null, null],
-          attrs: { md: "6", sm: "6" },
-          datasets: [
-            {
-              label: "Today",
-              fill: "start",
-              borderWidth: 1.5,
-              backgroundColor: "rgba(0, 184, 216, 0.1)",
-              borderColor: "rgb(0, 184, 216)",
-              data: [1, 2, 1, 3, 5, 4, 7]
-            }
-          ]
-        }
-      ]
+      smallStats: []
+      // smallStats: [
+      //   {
+      //     label: "Songs",
+      //     value: "1,391",
+      //     percentage: "4.7%",
+      //     increase: true,
+      //     chartLabels: [null, null, null, null, null, null, null],
+      //     attrs: { md: "6", sm: "6" },
+      //     datasets: [
+      //       {
+      //         label: "Today",
+      //         fill: "start",
+      //         borderWidth: 1.5,
+      //         backgroundColor: "rgba(0, 184, 216, 0.1)",
+      //         borderColor: "rgb(0, 184, 216)",
+      //         data: [1, 2, 1, 3, 5, 4, 7]
+      //       }
+      //     ]
+      //   }
+      // ]
     }
+
+  }
+
+  componentDidMount() {
+    SongStore.getAll().then(response => {
+      this.setState({smallStats: response})
+    })
+
   }
 
   render() {
