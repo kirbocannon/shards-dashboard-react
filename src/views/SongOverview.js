@@ -17,26 +17,6 @@ class SongOverview extends React.Component {
 
     this.state = {
       smallStats: []
-      // smallStats: [
-      //   {
-      //     label: "Songs",
-      //     value: "1,391",
-      //     percentage: "4.7%",
-      //     increase: true,
-      //     chartLabels: [null, null, null, null, null, null, null],
-      //     attrs: { md: "6", sm: "6" },
-      //     datasets: [
-      //       {
-      //         label: "Today",
-      //         fill: "start",
-      //         borderWidth: 1.5,
-      //         backgroundColor: "rgba(0, 184, 216, 0.1)",
-      //         borderColor: "rgb(0, 184, 216)",
-      //         data: [1, 2, 1, 3, 5, 4, 7]
-      //       }
-      //     ]
-      //   }
-      // ]
     }
 
   }
@@ -45,6 +25,9 @@ class SongOverview extends React.Component {
     SongStore.getAll().then(response => {
       this.setState({smallStats: response})
     })
+    //this.setState({smallStats: SongStore.getAll()})
+
+
 
   }
 
@@ -142,25 +125,25 @@ SongOverview.propTypes = {
 };
 
 SongOverview.defaultProps = {
-  smallStats: [
-    {
-      label: "Songs",
-      value: "2,391",
-      percentage: "4.7%",
-      increase: true,
-      chartLabels: [null, null, null, null, null, null, null],
-      attrs: { md: "6", sm: "6" },
-      datasets: [
-        {
-          label: "Today",
-          fill: "start",
-          borderWidth: 1.5,
-          backgroundColor: "rgba(0, 184, 216, 0.1)",
-          borderColor: "rgb(0, 184, 216)",
-          data: [1, 2, 1, 3, 5, 4, 7]
-        }
-      ]
-    },
+  // smallStats: [
+  //   {
+  //     label: "Songs",
+  //     value: "2,391",
+  //     percentage: "4.7%",
+  //     increase: true,
+  //     chartLabels: [null, null, null, null, null, null, null],
+  //     attrs: { md: "6", sm: "6" },
+  //     datasets: [
+  //       {
+  //         label: "Today",
+  //         fill: "start",
+  //         borderWidth: 1.5,
+  //         backgroundColor: "rgba(0, 184, 216, 0.1)",
+  //         borderColor: "rgb(0, 184, 216)",
+  //         data: [1, 2, 1, 3, 5, 4, 7]
+  //       }
+  //     ]
+  //   },
     // {
     //   label: "Pages",
     //   value: "182",
@@ -236,7 +219,7 @@ SongOverview.defaultProps = {
     //     }
     //   ]
     // }
-  ]
+  // ]
 };
 
 export default SongOverview;
