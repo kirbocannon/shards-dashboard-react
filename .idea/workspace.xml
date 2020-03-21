@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc00b1e7-bbed-4a36-a89c-b7ac05d62829" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/api/spotify.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/spotify.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/spotify.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/flux/stores/Songs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/flux/stores/Songs.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/SongOverview.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/SongOverview.js" afterDir="false" />
     </list>
@@ -19,24 +18,24 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api/spotify.js">
+        <entry file="file://$PROJECT_DIR$/src/flux/stores/Songs.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="71" column="8" selection-start-line="71" selection-start-column="8" selection-end-line="71" selection-end-column="8" />
+            <state relative-caret-position="238">
+              <caret line="33" column="30" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="30" />
               <folding>
-                <element signature="e#0#42#0" expanded="true" />
+                <element signature="e#0#38#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/flux/stores/Songs.js">
+        <entry file="file://$PROJECT_DIR$/src/api/spotify.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="64" column="12" selection-start-line="64" selection-start-column="12" selection-end-line="64" selection-end-column="12" />
+            <state relative-caret-position="129">
+              <caret line="108" column="21" selection-start-line="108" selection-start-column="21" selection-end-line="108" selection-end-column="21" />
               <folding>
-                <element signature="e#0#38#0" expanded="true" />
+                <element signature="e#0#42#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -45,11 +44,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/SongOverview.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="27" column="6" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
+            <state relative-caret-position="-5">
+              <caret line="30" column="10" lean-forward="true" selection-start-line="30" selection-start-column="10" selection-end-line="30" selection-end-column="10" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/flux/constants.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="31" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="60" />
             </state>
           </provider>
         </entry>
@@ -71,15 +79,6 @@
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/flux/constants.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="31" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="60" />
             </state>
           </provider>
         </entry>
@@ -116,18 +115,7 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>props</find>
-      <find>canvasRef</find>
-      <find>current</find>
-      <find>innerWrapperClasses</find>
-      <find>canvasref</find>
-      <find>shortid</find>
-      <find>stats</find>
-      <find>cardclasses</find>
-      <find>variation</find>
-      <find>percentage</find>
       <find>canvas</find>
-      <find>config</find>
       <find>react</find>
       <find>1.3.3</find>
       <find>web</find>
@@ -142,11 +130,25 @@
       <find>smallstats</find>
       <find>song</find>
       <find>label</find>
-      <find>SongOverview</find>
       <find>smallStats</find>
-      <find>_accessToken</find>
       <find>disp</find>
+      <find>_accessToken</find>
+      <find>axios</find>
+      <find>config</find>
+      <find>options</find>
+      <find>SongOverview</find>
+      <find>while</find>
+      <find>getPlaylists</find>
+      <find>constants.Sp</find>
+      <find>getTracksFromPlaylist</find>
+      <find>dataname</find>
+      <find>getTracksf</find>
+      <find>tracks</find>
+      <find>'tracks</find>
     </findStrings>
+    <replaceStrings>
+      <replace />
+    </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
     </dirStrings>
@@ -171,20 +173,20 @@
         <option value="$PROJECT_DIR$/src/flux/store.js" />
         <option value="$PROJECT_DIR$/src/flux/constants.js" />
         <option value="$PROJECT_DIR$/archive/test.js" />
-        <option value="$PROJECT_DIR$/src/api/spotify.js" />
         <option value="$PROJECT_DIR$/src/views/SongOverview.js" />
         <option value="$PROJECT_DIR$/src/flux/stores/Songs.js" />
+        <option value="$PROJECT_DIR$/src/api/spotify.js" />
       </list>
     </option>
   </component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="x" value="1" />
-    <option name="y" value="27" />
-    <option name="width" value="1648" />
-    <option name="height" value="951" />
+    <option name="y" value="23" />
+    <option name="width" value="1678" />
+    <option name="height" value="965" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -297,19 +299,19 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65664000" />
+    <option name="totallyTimeSpent" value="84362000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2" y="23" width="1678" height="965" extended-state="6" />
+    <frame x="1" y="23" width="1678" height="965" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2051901" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2051901" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30011454" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.30011454" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -317,7 +319,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.3295099" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.35280642" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.35280642" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -619,13 +621,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/flux/constants.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="31" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/archive/test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="519">
@@ -633,20 +628,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/spotify.js">
+    <entry file="file://$PROJECT_DIR$/src/flux/constants.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="71" column="8" selection-start-line="71" selection-start-column="8" selection-end-line="71" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="105">
+          <caret line="7" column="31" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="60" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/SongOverview.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="27" column="6" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
+        <state relative-caret-position="-5">
+          <caret line="30" column="10" lean-forward="true" selection-start-line="30" selection-start-column="10" selection-end-line="30" selection-end-column="10" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -655,10 +647,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/flux/stores/Songs.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="64" column="12" selection-start-line="64" selection-start-column="12" selection-end-line="64" selection-end-column="12" />
+        <state relative-caret-position="238">
+          <caret line="33" column="30" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="30" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/spotify.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="108" column="21" selection-start-line="108" selection-start-column="21" selection-end-line="108" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
           </folding>
         </state>
       </provider>

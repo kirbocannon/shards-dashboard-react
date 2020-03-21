@@ -25,10 +25,6 @@ class SongOverview extends React.Component {
     SongStore.getAll().then(response => {
       this.setState({smallStats: response})
     })
-    //this.setState({smallStats: SongStore.getAll()})
-
-
-
   }
 
   render() {

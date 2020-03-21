@@ -20,20 +20,18 @@ spotifyApi.setCredentials(
 class SongStore extends EventEmitter {
   constructor() {
     super()
-
-    // this.userId = constants.SPOTIFY_USERID
-    // this.username = constants.SPOTIFY_USERNAME
-    // this.userPassword = constants.SPOTIFY_PASSWORD
-    // this._accessToken = String()
   }
 
   async getAll() {
     const tokenResp = await spotifyApi.generateAccessToken()
     const totalTracks = await spotifyApi.getSongCountFromPlaylists()
 
+    const tracks = await spotifyApi.getSongsFromAllPlaylists()
+    console.log(tracks)
+
       return [
         {
-          label: "Playlist Tracks Total",
+          label: "Total Tracks From All Playlists",
           value: totalTracks,
           //value: 12,
           //percentage: "4.7%",
@@ -52,7 +50,7 @@ class SongStore extends EventEmitter {
           ]
         },
         {
-          label: "Total Tracks", // don't count duplicates
+          label: "Total Unique Tracks", // don't count duplicates
           value: 0,
           //percentage: "4.7%",
           increase: true,
