@@ -138,37 +138,45 @@ const SpotifyApi = (function() {
   }
 
   Constr.prototype.getSongsFromAllPlaylists = async function() {
+    // This function will get all tracks from a playlist.
+    // It will automatically remove duplicates within a playlist.
 
     const playlists = await this._getAllNextItems('getPlaylists')
+    const tracks = []
 
-    const tracks = await this._getAllNextItems(
-      'getTracksFromPlaylist',
-      '6CoAVIXJe8Xgg5JFyBcEoq'
-    )
+    for (let i=0; i < 3; i++) { // only doing up to 3 playlists now
+      let playlistsTracks = new Set()
 
-    console.log(playlists)
+      let playlistTracksResp = await this._getAllNextItems(
+        'getTracksFromPlaylist',
+        playlists[i].id
+      )
 
+      playlistTracksResp.forEach(track => {
+        playlistsTracks.add(track)
+      })
 
-    return 'tracks'
+      tracks.push(
+        {
+          'playlist': playlists[i].name,
+          'tracks': Array.from(playlistsTracks) // convert set to array
+        })
+    }
 
+    return tracks
 
   }
 
   Constr.prototype.getSongCountFromPlaylists = async function() {
     // includes duplicates
-    try {
-      const playlists = await this._getAllNextItems('getPlaylists')
-      let totalTracks = 0
+    const playlists = await this._getAllNextItems('getPlaylists')
+    let totalTracks = 0
 
-      playlists.forEach(playlist => {
-        totalTracks += playlist.tracks.total
-      })
+    playlists.forEach(playlist => {
+      totalTracks += playlist.tracks.total
+    })
 
-      return totalTracks
-
-    } catch (error) {
-      console.error(error);
-  }
+    return totalTracks
 
   }
 
@@ -189,10 +197,6 @@ const SpotifyApi = (function() {
   return Constr
 
 })()
-
-// if (typeof module === 'object' && typeof module.exports === 'object') {
-//   module.exports = SpotifyApi;
-// }
 
 export default SpotifyApi
 
