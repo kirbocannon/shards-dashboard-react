@@ -25,13 +25,16 @@ class SongStore extends EventEmitter {
   async getAll() {
     const tokenResp = await spotifyApi.generateAccessToken()
     const totalTracks = await spotifyApi.getSongCountFromPlaylists()
+    //const tracks = await spotifyApi.getAllTracks()
 
-    const tracks = await spotifyApi.getSongsFromAllPlaylists()
-    console.log(tracks)
+    //const tracks = await spotifyApi.getSongsFromAllPlaylists()
+    //console.log(tracks.tracks, tracks.totalTrackCount)
+
+
 
       return [
         {
-          label: "Total Tracks From All Playlists",
+          label: "Total Tracks From Playlists",
           value: totalTracks,
           //value: 12,
           //percentage: "4.7%",
@@ -51,7 +54,7 @@ class SongStore extends EventEmitter {
         },
         {
           label: "Total Unique Tracks", // don't count duplicates
-          value: 0,
+          //value: tracks.totalTrackCount,
           //percentage: "4.7%",
           increase: true,
           chartLabels: [null, null, null, null, null, null, null],

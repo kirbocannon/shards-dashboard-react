@@ -7,7 +7,7 @@ const axios = require('axios').default;
 axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 
 
-const SpotifyApi = (function() {
+const SpotifyApi = (function () {
   const _baseUri = 'https://api.spotify.com/v1'
   const _accessTokenUri = 'https://accounts.spotify.com/api/token'
 
@@ -18,13 +18,15 @@ const SpotifyApi = (function() {
   const _limit = constants.SPOTIFY_LIMIT
 
 
-  const Constr = function() {}
+  const Constr = function () {
+  }
 
   Constr.prototype = {
     constructor: SpotifyApi
   };
 
   Constr.prototype._buildRequest = function (method, endpoint, data = {}) {
+    // need to do some logic here based on grant type
     data.grant_type = constants.SPOTIFY_GRANT_TYPE
     const headers = {'Authorization': `Bearer ${this.getAccessToken()}`}
     const options = {
@@ -35,7 +37,6 @@ const SpotifyApi = (function() {
 
     if (options.auth === 'POST' && data) {
       options.data = qs.stringify(data)
-
     }
 
     return options
@@ -46,11 +47,10 @@ const SpotifyApi = (function() {
     const options = this._buildRequest(method, endpoint, data)
 
     return (axios(options))
-
   }
 
-  Constr.prototype.generateAccessToken = function() {
-    const data = { grant_type: constants.SPOTIFY_GRANT_TYPE };
+  Constr.prototype.generateAccessToken = function () {
+    const data = {grant_type: constants.SPOTIFY_GRANT_TYPE};
     const options = {
       method: 'POST',
       auth: {
@@ -68,17 +68,15 @@ const SpotifyApi = (function() {
     )
   }
 
-  Constr.prototype.getPlaylists = function(limit = _limit, offset = 0) {
+  Constr.prototype.getPlaylists = function (limit = _limit, offset = 0) {
 
     return (this._sendRequest(
       'GET',
       `users/${_userId}/playlists?limit=${limit}&offset=${offset}` // don't think we need offset here
     ))
-
-
   }
 
-  Constr.prototype.getTracksFromPlaylist = function(
+  Constr.prototype.getTracksFromPlaylist = function (
     playlistId,
     limit,
     offset
@@ -88,12 +86,10 @@ const SpotifyApi = (function() {
     return this._sendRequest(
       'GET',
       `playlists/${playlistId}/tracks?limit=${limit}&offset=${offset}`
-
     )
-
   }
 
-  Constr.prototype._getAllNextItems = async function(funcName) {
+  Constr.prototype._getAllNextItems = async function (funcName) {
     // might be a better way to do this - also handle args
     const items = []
     let currentOffset = 0
@@ -137,37 +133,73 @@ const SpotifyApi = (function() {
 
   }
 
-  Constr.prototype.getSongsFromAllPlaylists = async function() {
-    // This function will get all tracks from a playlist.
-    // It will automatically remove duplicates within a playlist.
-
-    const playlists = await this._getAllNextItems('getPlaylists')
-    const tracks = []
-
-    for (let i=0; i < 3; i++) { // only doing up to 3 playlists now
-      let playlistsTracks = new Set()
-
-      let playlistTracksResp = await this._getAllNextItems(
-        'getTracksFromPlaylist',
-        playlists[i].id
-      )
-
-      playlistTracksResp.forEach(track => {
-        playlistsTracks.add(track)
-      })
-
-      tracks.push(
-        {
-          'playlist': playlists[i].name,
-          'tracks': Array.from(playlistsTracks) // convert set to array
-        })
-    }
-
-    return tracks
-
+  Constr.prototype._getTracks = async function (limit = _limit, offset = 0) {
+    return this._sendRequest(
+      'GET',
+      `me/tracks?limit=${limit}&offset=${offset}`
+    )
   }
 
-  Constr.prototype.getSongCountFromPlaylists = async function() {
+  Constr.prototype.getAllTracks = async function () {
+
+    const headers = {}
+    const options = {
+      method: 'GET',
+      headers: headers,
+      url: 'https://accounts.spotify.com/authorize' +
+        '?client_id=' + _username +
+        '&response_type=code' +
+        '&redirect_uri=http://localhost:3000'
+    }
+
+    axios(options).then(response => {
+      console.log(response)
+    })
+
+
+
+
+    //return await this._getAllNextItems('_getTracks')
+  }
+
+  // Constr.prototype.getSongsFromAllPlaylists = async function() {
+  //   // This function will get all tracks from a playlist.
+  //   // It will automatically remove duplicates
+  //   // this function is just too slow so commenting out for now
+  //
+  //   const playlists = await this._getAllNextItems('getPlaylists')
+  //   const tracks = []
+  //
+  //   let totalTrackCount = 0
+  //
+  //   for (let i=0; i < playlists.length; i++) { // only doing up to 3 playlists now
+  //     let playlistsTracks = new Set()
+  //
+  //     let playlistTracksResp = await this._getAllNextItems(
+  //       'getTracksFromPlaylist',
+  //       playlists[i].id
+  //     )
+  //
+  //     playlistTracksResp.forEach(track => {
+  //       playlistsTracks.add(track.track.name)
+  //     })
+  //
+  //     console.log(playlistsTracks)
+  //
+  //     totalTrackCount += playlistsTracks.size // get set length
+  //
+  //     tracks.push(
+  //       {
+  //         'playlist': playlists[i].name,
+  //         'tracks': Array.from(playlistsTracks) // convert set to array
+  //       })
+  //   }
+  //
+  //   return {'tracks': tracks, 'totalTrackCount': totalTrackCount}
+  //
+  // }
+
+  Constr.prototype.getSongCountFromPlaylists = async function () {
     // includes duplicates
     const playlists = await this._getAllNextItems('getPlaylists')
     let totalTracks = 0
@@ -180,17 +212,17 @@ const SpotifyApi = (function() {
 
   }
 
-  Constr.prototype.setCredentials = function(uid, un, up) {
+  Constr.prototype.setCredentials = function (uid, un, up) {
     _userId = uid
     _username = un
     _userPassword = up
   };
 
-  Constr.prototype.getAccessToken = function() {
+  Constr.prototype.getAccessToken = function () {
     return _accessToken
   };
 
-  Constr.prototype.setAccessToken = function(accessToken) {
+  Constr.prototype.setAccessToken = function (accessToken) {
     _accessToken = accessToken;
   };
 
@@ -199,7 +231,3 @@ const SpotifyApi = (function() {
 })()
 
 export default SpotifyApi
-
-
-
-

@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Container, Row, Col } from "shards-react";
+import { Container, Row, Col} from "shards-react";
 
 import PageTitle from "./../components/common/PageTitle";
 import SmallStats from "./../components/common/SmallStats";
 import SongStore from "./../flux/stores/Songs";
+import SpotifyAuthorization from "./SpotifyAuthorization";
 //import UsersOverview from "./../components/blog/UsersOverview";
 //import UsersByDevice from "./../components/blog/UsersByDevice";
 //import NewDraft from "./../components/blog/NewDraft";
@@ -52,6 +53,10 @@ class SongOverview extends React.Component {
               />
             </Col>
           ))}
+        </Row>
+        <Row>
+          <SpotifyAuthorization/>
+
         </Row>
       </Container>
     )
