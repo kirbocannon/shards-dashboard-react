@@ -2,29 +2,24 @@ import { EventEmitter } from "events";
 
 import Dispatcher from "../dispatcher";
 
-import qs from 'qs'
-
 import constants from "../constants"
 import SpotifyApi from "../../api/spotify"
-
-const spotifyApi = new SpotifyApi()
-
-
-spotifyApi.setCredentials(
-  constants.SPOTIFY_USERID,
-  constants.SPOTIFY_USERNAME,
-  constants.SPOTIFY_PASSWORD
-)
 
 
 class SongStore extends EventEmitter {
   constructor() {
     super()
+    this.spotifyApi = new SpotifyApi()
+    this.spotifyApi.setCredentials(
+      constants.SPOTIFY_USERID,
+      constants.SPOTIFY_USERNAME,
+      constants.SPOTIFY_PASSWORD
+    )
   }
 
   async getAll() {
-    const tokenResp = await spotifyApi.generateAccessToken()
-    const totalTracks = await spotifyApi.getSongCountFromPlaylists()
+    const tokenResp = await this.spotifyApi.generateAccessToken()
+    const totalTracks = await this.spotifyApi.getSongCountFromPlaylists()
     //const tracks = await spotifyApi.getAllTracks()
 
     //const tracks = await spotifyApi.getSongsFromAllPlaylists()

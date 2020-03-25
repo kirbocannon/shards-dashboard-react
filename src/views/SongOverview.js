@@ -5,7 +5,7 @@ import { Container, Row, Col} from "shards-react";
 import PageTitle from "./../components/common/PageTitle";
 import SmallStats from "./../components/common/SmallStats";
 import SongStore from "./../flux/stores/Songs";
-import SpotifyAuthorization from "./SpotifyAuthorization";
+import SpotifyOauthAuthorization from "../components/auth/SpotifyOauthAuthorization";
 //import UsersOverview from "./../components/blog/UsersOverview";
 //import UsersByDevice from "./../components/blog/UsersByDevice";
 //import NewDraft from "./../components/blog/NewDraft";
@@ -13,8 +13,8 @@ import SpotifyAuthorization from "./SpotifyAuthorization";
 //import TopReferrals from "./../components/common/TopReferrals";
 
 class SongOverview extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       smallStats: []
@@ -55,8 +55,7 @@ class SongOverview extends React.Component {
           ))}
         </Row>
         <Row>
-          <SpotifyAuthorization/>
-
+          <SpotifyOauthAuthorization/>
         </Row>
       </Container>
     )

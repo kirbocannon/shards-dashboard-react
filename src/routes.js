@@ -12,6 +12,7 @@ import Errors from "./views/Errors";
 import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
+import SpotifyOauthCodeRedirect from "./components/auth/SpotifyOauthCodeRedirect";
 
 export default [
   {
@@ -24,6 +25,12 @@ export default [
     path: "/blog-overview",
     layout: DefaultLayout,
     component: SongOverview
+  },
+  {
+    path: "/callback",
+    layout: DefaultLayout,
+    //component: () => <Redirect to="/blog-overview" />
+    component: SpotifyOauthCodeRedirect
   },
   {
     path: "/user-profile-lite",

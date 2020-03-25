@@ -149,13 +149,11 @@ const SpotifyApi = (function () {
       url: 'https://accounts.spotify.com/authorize' +
         '?client_id=' + _username +
         '&response_type=code' +
-        '&redirect_uri=http://localhost:3000'
+        '&scope=user-library-read' +
+        '&redirect_uri=http://localhost:3000/callback'
     }
 
-    axios(options).then(response => {
-      console.log(response)
-    })
-
+    return axios(options)
 
 
 
