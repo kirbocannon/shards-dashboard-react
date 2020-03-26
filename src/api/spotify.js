@@ -10,8 +10,10 @@ axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencod
 const SpotifyApi = (function () {
   const _baseUri = 'https://api.spotify.com/v1'
   const _accessTokenUri = 'https://accounts.spotify.com/api/token'
+  const _authTokenUri = 'https://accounts.spotify.com/authorize'
 
   let _accessToken = String()
+  let _authorizedAccessToken = String();
   let _userId = String();
   let _username = String();
   let _userPassword = String();
@@ -25,14 +27,34 @@ const SpotifyApi = (function () {
     constructor: SpotifyApi
   };
 
-  Constr.prototype._buildRequest = function (method, endpoint, data = {}) {
+  Constr.prototype._buildRequest = function (method, endpoint, data = {}, authorized = false, externalURL = false) {
     // need to do some logic here based on grant type
-    data.grant_type = constants.SPOTIFY_GRANT_TYPE
-    const headers = {'Authorization': `Bearer ${this.getAccessToken()}`}
+    let url = String()
+    let headers = {}
+
+    if (!externalURL) {
+      url = _baseUri + '/' + endpoint
+    } else {
+      url = endpoint
+    }
+
+    let accessToken = Object()
+
+    if (!authorized) {
+      accessToken = this.getAccessToken()
+      headers.Authorization =`Bearer ${accessToken}`
+      data.grant_type = constants.SPOTIFY_GRANT_TYPE
+    }
+
+    if (!endpoint.includes(_authTokenUri) && authorized) {
+      accessToken = this.getAuthorizedAccessToken()
+      headers.Authorization =`Bearer ${accessToken}`
+    }
+
     const options = {
       method: method,
       headers: headers,
-      url: _baseUri + '/' + endpoint
+      url: url
     }
 
     if (options.auth === 'POST' && data) {
@@ -43,14 +65,26 @@ const SpotifyApi = (function () {
 
   }
 
-  Constr.prototype._sendRequest = function (method, endpoint, data = {}) {
-    const options = this._buildRequest(method, endpoint, data)
+  Constr.prototype._sendRequest = function (method, endpoint, data = {}, authorized = false, externalURL = false) {
+    const options = this._buildRequest(method, endpoint, data, authorized, externalURL)
 
     return (axios(options))
   }
 
-  Constr.prototype.generateAccessToken = function () {
-    const data = {grant_type: constants.SPOTIFY_GRANT_TYPE};
+  Constr.prototype.generateAccessToken = function (authorized = false) {
+    let grantType = String()
+
+    if (!authorized) {
+      grantType = 'client_credentials'
+    } else {
+      grantType = 'authorization_code'
+    }
+    const data = {'grant_type': grantType};
+
+    if (authorized) {
+      data.redirect_uri = constants.SPOTIFY_REDIRECT_URI // TODO: work on solid location on where to keep everything
+      data.code = this.getAuthorizedAccessToken()
+    }
     const options = {
       method: 'POST',
       auth: {
@@ -136,29 +170,37 @@ const SpotifyApi = (function () {
   Constr.prototype._getTracks = async function (limit = _limit, offset = 0) {
     return this._sendRequest(
       'GET',
-      `me/tracks?limit=${limit}&offset=${offset}`
+      `me/tracks?limit=${limit}&offset=${offset}`,
+      {},
+      true,
+      false
     )
   }
 
-  Constr.prototype.getAllTracks = async function () {
+  Constr.prototype.authorize = async function (username, scope, redirectURI) {
 
-    const headers = {}
-    const options = {
-      method: 'GET',
-      headers: headers,
-      url: 'https://accounts.spotify.com/authorize' +
-        '?client_id=' + _username +
+    return this._sendRequest(
+      'GET',
+      _authTokenUri +
+        '?client_id=' + username +
         '&response_type=code' +
-        '&scope=user-library-read' +
-        '&redirect_uri=http://localhost:3000/callback'
-    }
+        '&scope=' + scope +
+        '&redirect_uri=' + redirectURI,
+      {},
+      true,
+      true
+    )
 
-    return axios(options)
+    //return axios(options)
 
 
-
-    //return await this._getAllNextItems('_getTracks')
   }
+
+  // Constr.prototype.getAllTracks = async function () {
+  //   //return axios(options)
+  //
+  //   //return await this._getAllNextItems('_getTracks')
+  // }
 
   // Constr.prototype.getSongsFromAllPlaylists = async function() {
   //   // This function will get all tracks from a playlist.
@@ -216,6 +258,19 @@ const SpotifyApi = (function () {
     _userPassword = up
   };
 
+  Constr.prototype.getCredentials = function () {
+
+    return {
+      userId: _userId,
+      username: _username,
+      userPassword: _userPassword
+    }
+  };
+
+  // Constr.prototype.setRedirectURL = function (redirectURL) {
+  //
+  // };
+
   Constr.prototype.getAccessToken = function () {
     return _accessToken
   };
@@ -223,6 +278,18 @@ const SpotifyApi = (function () {
   Constr.prototype.setAccessToken = function (accessToken) {
     _accessToken = accessToken;
   };
+
+  Constr.prototype.getAuthorizedAccessToken = function () {
+    //_authorizedAccessToken = localStorage.getItem('SpotifyAuthCode');
+    //return _authorizedAccessToken
+    return localStorage.getItem('SpotifyAuthCode')
+  };
+
+  // Constr.prototype.setAuthorizedAccessToken = function () {
+  //   _authorizedAccessToken = localStorage.getItem('SpotifyAuthCode');
+  //   return _authorizedAccessToken
+  //
+  // };
 
   return Constr
 

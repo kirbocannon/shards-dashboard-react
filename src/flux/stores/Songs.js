@@ -21,6 +21,8 @@ class SongStore extends EventEmitter {
     const tokenResp = await this.spotifyApi.generateAccessToken()
     const totalTracks = await this.spotifyApi.getSongCountFromPlaylists()
     //const tracks = await spotifyApi.getAllTracks()
+    //const tracks = await this.spotifyApi._getTracks()
+    // console.log(tracks)
 
     //const tracks = await spotifyApi.getSongsFromAllPlaylists()
     //console.log(tracks.tracks, tracks.totalTrackCount)
