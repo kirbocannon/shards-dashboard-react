@@ -35,10 +35,16 @@ class SpotifyOauthAuthorization extends React.Component {
 
   handleShow = () => {
     this.setState({show: true})
+    // this.spotifyApi.authorize(
+    //   constants.SPOTIFY_USERNAME,
+    //   'user-library-read',
+    //   `${constants.SPOTIFY_REDIRECT_URI}`).then(response => {
+    //   this.setState({redirectURL: response.request.responseURL})
+    // })
     this.spotifyApi.authorize(
       constants.SPOTIFY_USERNAME,
       'user-library-read',
-      `${constants.SPOTIFY_REDIRECT_URI}`).then(response => {
+      `${constants.SPOTIFY_AUTH_CALLBACK_URI}`).then(response => {
       this.setState({redirectURL: response.request.responseURL})
     })
   }

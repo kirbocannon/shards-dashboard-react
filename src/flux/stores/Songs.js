@@ -18,11 +18,15 @@ class SongStore extends EventEmitter {
   }
 
   async getAll() {
-    const tokenResp = await this.spotifyApi.generateAccessToken()
+    const tokenResp = await this.spotifyApi.generateAccessToken('nonauthorized')
     const totalTracks = await this.spotifyApi.getSongCountFromPlaylists()
+
+    const authToken = await this.spotifyApi.generateAccessToken('authorized')
+    console.log(this.spotifyApi.getAuthorizedAccessToken())
+
     //const tracks = await spotifyApi.getAllTracks()
-    //const tracks = await this.spotifyApi._getTracks()
-    // console.log(tracks)
+    const tracks = await this.spotifyApi._getTracks()
+    console.log(tracks)
 
     //const tracks = await spotifyApi.getSongsFromAllPlaylists()
     //console.log(tracks.tracks, tracks.totalTrackCount)

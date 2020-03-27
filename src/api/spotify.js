@@ -14,6 +14,7 @@ const SpotifyApi = (function () {
 
   let _accessToken = String()
   let _authorizedAccessToken = String();
+  let _refreshToken = String();
   let _userId = String();
   let _username = String();
   let _userPassword = String();
@@ -27,7 +28,7 @@ const SpotifyApi = (function () {
     constructor: SpotifyApi
   };
 
-  Constr.prototype._buildRequest = function (method, endpoint, data = {}, authorized = false, externalURL = false) {
+  Constr.prototype._buildRequest = function (method, endpoint, data = {}, authorized = false, accessToken = null, externalURL = false) {
     // need to do some logic here based on grant type
     let url = String()
     let headers = {}
@@ -38,16 +39,18 @@ const SpotifyApi = (function () {
       url = endpoint
     }
 
-    let accessToken = Object()
+    if (!accessToken) {
 
-    if (!authorized) {
-      accessToken = this.getAccessToken()
-      headers.Authorization =`Bearer ${accessToken}`
-      data.grant_type = constants.SPOTIFY_GRANT_TYPE
-    }
+      if (!authorized)  {
+        accessToken = this.getAccessToken()
+        headers.Authorization =`Bearer ${accessToken}`
+      }
 
-    if (!endpoint.includes(_authTokenUri) && authorized) {
-      accessToken = this.getAuthorizedAccessToken()
+      if (!endpoint.includes(_authTokenUri) && !endpoint.includes(_accessTokenUri) && authorized) {
+        accessToken = this.getAuthorizedCode()
+        headers.Authorization =`Bearer ${accessToken}`
+      }
+    } else {
       headers.Authorization =`Bearer ${accessToken}`
     }
 
@@ -65,39 +68,58 @@ const SpotifyApi = (function () {
 
   }
 
-  Constr.prototype._sendRequest = function (method, endpoint, data = {}, authorized = false, externalURL = false) {
-    const options = this._buildRequest(method, endpoint, data, authorized, externalURL)
+  Constr.prototype._sendRequest = function (method, endpoint, data = {}, authorized = false, accessToken, externalURL = false) {
+    const options = this._buildRequest(method, endpoint, data, authorized, accessToken, externalURL)
 
     return (axios(options))
   }
 
-  Constr.prototype.generateAccessToken = function (authorized = false) {
-    let grantType = String()
+  Constr.prototype.generateAccessToken = function (reqType = null) {
+    // AUTHORIZED, NONAUTHORIZED, REFRESH
+    let data = {};
+    let authorized = false
+    reqType = reqType.toUpperCase()
 
-    if (!authorized) {
-      grantType = 'client_credentials'
-    } else {
-      grantType = 'authorization_code'
+    switch (reqType) {
+      case 'NONAUTHORIZED':
+        data.grant_type = 'client_credentials'
+        break;
+      case 'AUTHORIZED':
+        authorized = true
+        data.grant_type = 'authorization_code'
+        data.redirect_uri = constants.SPOTIFY_AUTH_CALLBACK_URI // TODO: work on solid location on where to keep everything
+        data.code = this.getAuthorizedCode()
+        break;
+      case 'REFRESH':
+        data.grant_type = 'refresh_token'
+        data.refresh_token = _refreshToken
+        break;
+      default:
     }
-    const data = {'grant_type': grantType};
 
-    if (authorized) {
-      data.redirect_uri = constants.SPOTIFY_REDIRECT_URI // TODO: work on solid location on where to keep everything
-      data.code = this.getAuthorizedAccessToken()
-    }
+    // if (authorized) {
+    //   data.redirect_uri = constants.SPOTIFY_AUTH_CALLBACK_URI // TODO: work on solid location on where to keep everything
+    //   data.code = this.getAuthorizedCode()
+    // }
+
     const options = {
       method: 'POST',
       auth: {
         username: _username, // need to get this from secure datastore
         password: _userPassword, // need to get this from secure datastore
-
       },
       data: qs.stringify(data),
       url: _accessTokenUri,
     };
 
     return (axios(options).then(response => {
+      if (!authorized) {
         this.setAccessToken(response.data.access_token)
+      } else if (authorized) {
+        //console.log(response)
+        this.setAuthorizedAccessToken(response.data.access_token)
+        this.setRefreshToken(response.data.refresh_token)
+      }
       })
     )
   }
@@ -173,6 +195,7 @@ const SpotifyApi = (function () {
       `me/tracks?limit=${limit}&offset=${offset}`,
       {},
       true,
+      `${_authorizedAccessToken}`,
       false
     )
   }
@@ -188,11 +211,21 @@ const SpotifyApi = (function () {
         '&redirect_uri=' + redirectURI,
       {},
       true,
+      null,
       true
     )
 
-    //return axios(options)
-
+    // await this._sendRequest(
+    //   'GET',
+    //   _authTokenUri +
+    //   '?client_id=' + username +
+    //   '&response_type=code' +
+    //   '&scope=' + scope +
+    //   '&redirect_uri=' + redirectURI,
+    //   {},
+    //   true,
+    //   true
+    // )
 
   }
 
@@ -279,17 +312,29 @@ const SpotifyApi = (function () {
     _accessToken = accessToken;
   };
 
-  Constr.prototype.getAuthorizedAccessToken = function () {
+  Constr.prototype.getRefreshToken = function () {
+    return _refreshToken
+  };
+
+  Constr.prototype.setRefreshToken = function (refreshToken) {
+    _refreshToken = refreshToken;
+  };
+
+  Constr.prototype.getAuthorizedCode = function () {
     //_authorizedAccessToken = localStorage.getItem('SpotifyAuthCode');
     //return _authorizedAccessToken
     return localStorage.getItem('SpotifyAuthCode')
   };
 
-  // Constr.prototype.setAuthorizedAccessToken = function () {
-  //   _authorizedAccessToken = localStorage.getItem('SpotifyAuthCode');
-  //   return _authorizedAccessToken
-  //
-  // };
+  Constr.prototype.getAuthorizedAccessToken = function () {
+    return _authorizedAccessToken
+  };
+
+  Constr.prototype.setAuthorizedAccessToken = function (authorizedAccessToken) {
+    //_authorizedAccessToken = localStorage.getItem('SpotifyAuthCode');
+    _authorizedAccessToken = authorizedAccessToken
+    //return _authorizedAccessToken
+  };
 
   return Constr
 
