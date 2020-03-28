@@ -75,7 +75,7 @@ const SpotifyApi = (function () {
   }
 
   Constr.prototype.generateAccessToken = function (reqType = null) {
-    // AUTHORIZED, NONAUTHORIZED, REFRESH
+    // reqType accepts AUTHORIZED, NONAUTHORIZED, REFRESH
     let data = {};
     let authorized = false
     reqType = reqType.toUpperCase()
