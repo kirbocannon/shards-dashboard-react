@@ -50,7 +50,7 @@ const SpotifyApi = (function () {
         accessToken = this.getAuthorizedCode()
         headers.Authorization =`Bearer ${accessToken}`
       }
-    } else {
+    } else if (authorized) {
       headers.Authorization =`Bearer ${accessToken}`
     }
 
@@ -76,50 +76,108 @@ const SpotifyApi = (function () {
 
   Constr.prototype.generateAccessToken = function (reqType = null) {
     // reqType accepts AUTHORIZED, NONAUTHORIZED, REFRESH
-    let data = {};
     let authorized = false
+    let refreshTokenExists = !!this.getRefreshToken()
     reqType = reqType.toUpperCase()
+    let options = {}
+
+    function _buildOptions(data, stringify=false) {
+      if (stringify) {
+        data = qs.stringify(data)
+      }
+      return {
+        method: 'POST',
+        auth: {
+          username: _username,
+          password: _userPassword,
+        },
+        data: data,
+        url: _accessTokenUri,
+      }
+    }
 
     switch (reqType) {
       case 'NONAUTHORIZED':
-        data.grant_type = 'client_credentials'
+        options = _buildOptions(
+          {grant_type: 'client_credentials'},
+          true
+        )
         break;
       case 'AUTHORIZED':
         authorized = true
-        data.grant_type = 'authorization_code'
-        data.redirect_uri = constants.SPOTIFY_AUTH_CALLBACK_URI // TODO: work on solid location on where to keep everything
-        data.code = this.getAuthorizedCode()
+        if (refreshTokenExists) {
+          options = _buildOptions(
+            {
+              grant_type: 'refresh_token',
+              refresh_token: this.getRefreshToken()
+            },
+            true
+          )
+          // axios(gaOptions).then(response => {
+          //   this.setAuthorizedAccessToken(response.data.access_token)
+          //   // options = _buildOptions(
+          //   //   {grant_type: 'client_credentials'},
+          //   //   true
+          //   // )
+          // })
+        } else {
+          // data.grant_type = 'authorization_code'
+          // data.redirect_uri = constants.SPOTIFY_AUTH_CALLBACK_URI // TODO: work on solid location on where to keep everything
+          // data.code = this.getAuthorizedCode()
+          options = _buildOptions(
+            {
+              grant_type: 'authorization_code',
+              redirect_uri: constants.SPOTIFY_AUTH_CALLBACK_URI, // TODO: work on solid location on where to keep everything
+              code: this.getAuthorizedCode()
+            },
+            true
+          )
+        }
+        // if (!refresh) {
+        //   authorized = true
+        //   data.grant_type = 'authorization_code'
+        //   data.redirect_uri = constants.SPOTIFY_AUTH_CALLBACK_URI // TODO: work on solid location on where to keep everything
+        //   data.code = this.getAuthorizedCode()
+        // } else {
+        //   data.grant_type = 'refresh_token' // TODO: prob don't need to cop a refresh token every time
+        //   data.refresh_token = this.getRefreshToken()
+        //   refresh = true
+        // }
         break;
-      case 'REFRESH':
-        data.grant_type = 'refresh_token'
-        data.refresh_token = _refreshToken
-        break;
+      // case 'REFRESH':
+      //   data.grant_type = 'refresh_token'
+      //   //data.refresh_token = _refreshToken
+      //   data.refresh_token = this.getRefreshToken()
+      //   refresh = true
+      //   break;
       default:
     }
 
-    // if (authorized) {
-    //   data.redirect_uri = constants.SPOTIFY_AUTH_CALLBACK_URI // TODO: work on solid location on where to keep everything
-    //   data.code = this.getAuthorizedCode()
-    // }
-
-    const options = {
-      method: 'POST',
-      auth: {
-        username: _username, // need to get this from secure datastore
-        password: _userPassword, // need to get this from secure datastore
-      },
-      data: qs.stringify(data),
-      url: _accessTokenUri,
-    };
-
     return (axios(options).then(response => {
-      if (!authorized) {
-        this.setAccessToken(response.data.access_token)
-      } else if (authorized) {
-        //console.log(response)
-        this.setAuthorizedAccessToken(response.data.access_token)
-        this.setRefreshToken(response.data.refresh_token)
-      }
+        if (!authorized) {
+          this.setAccessToken(response.data.access_token)
+        }
+        else if (authorized) {
+          this.setAuthorizedAccessToken(response.data.access_token)
+
+          if (!refreshTokenExists) {
+            this.setRefreshToken(response.data.refresh_token)
+          }
+        }
+        // else if (authorized && !refreshTokenExists) {
+        //   this.setAuthorizedAccessToken(response.data.access_token)
+        //   this.setRefreshToken(response.data.refresh_token)
+        // }
+        // else if (authorized){
+        //   this.setAuthorizedAccessToken(response.data.access_token)
+        //   this.setRefreshToken(response.data.refresh_token)
+        //   localStorage.setItem('refreshToken', response.data.refresh_token)
+        // }
+        // else if (refresh) {
+        //   //console.log('yes', response.data.access_token)
+        //   this.setAuthorizedAccessToken(response.data.access_token)
+        //   this.setRefreshToken(response.data.refresh_token)
+        // }
       })
     )
   }
@@ -195,7 +253,7 @@ const SpotifyApi = (function () {
       `me/tracks?limit=${limit}&offset=${offset}`,
       {},
       true,
-      `${_authorizedAccessToken}`,
+      `${this.getAuthorizedAccessToken()}`,
       false
     )
   }
@@ -313,11 +371,13 @@ const SpotifyApi = (function () {
   };
 
   Constr.prototype.getRefreshToken = function () {
-    return _refreshToken
+    return localStorage.getItem('refreshToken')
+    //return _refreshToken
   };
 
   Constr.prototype.setRefreshToken = function (refreshToken) {
     _refreshToken = refreshToken;
+    localStorage.setItem('refreshToken', refreshToken)
   };
 
   Constr.prototype.getAuthorizedCode = function () {
@@ -326,12 +386,20 @@ const SpotifyApi = (function () {
     return localStorage.getItem('SpotifyAuthCode')
   };
 
+  Constr.prototype.setAuthorizedCode = function (code) {
+    //_authorizedAccessToken = localStorage.getItem('SpotifyAuthCode');
+    //return _authorizedAccessToken
+    return localStorage.setItem('SpotifyAuthCode', code)
+  };
+
   Constr.prototype.getAuthorizedAccessToken = function () {
-    return _authorizedAccessToken
+    return localStorage.getItem('authorizedAccessToken')
+    //return _authorizedAccessToken
   };
 
   Constr.prototype.setAuthorizedAccessToken = function (authorizedAccessToken) {
     //_authorizedAccessToken = localStorage.getItem('SpotifyAuthCode');
+    localStorage.setItem('authorizedAccessToken', authorizedAccessToken)
     _authorizedAccessToken = authorizedAccessToken
     //return _authorizedAccessToken
   };

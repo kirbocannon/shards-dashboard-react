@@ -20,13 +20,18 @@ class SongStore extends EventEmitter {
   async getAll() {
     const tokenResp = await this.spotifyApi.generateAccessToken('nonauthorized')
     const totalTracks = await this.spotifyApi.getSongCountFromPlaylists()
+    console.log(totalTracks)
 
     const authToken = await this.spotifyApi.generateAccessToken('authorized')
-    console.log(this.spotifyApi.getAuthorizedAccessToken())
+    //console.log(this.spotifyApi.getAuthorizedAccessToken(), 'trying to in songs')
+    // //
+    // // //const tracks = await spotifyApi.getAllTracks()
+    // const tracks = await this.spotifyApi._getTracks()
+    // console.log(tracks)
 
-    //const tracks = await spotifyApi.getAllTracks()
-    const tracks = await this.spotifyApi._getTracks()
-    console.log(tracks)
+
+    // const refreshToken = await this.spotifyApi.generateAccessToken('refresh')
+    // console.log('refresh token', refreshToken)
 
     //const tracks = await spotifyApi.getSongsFromAllPlaylists()
     //console.log(tracks.tracks, tracks.totalTrackCount)
@@ -36,7 +41,8 @@ class SongStore extends EventEmitter {
       return [
         {
           label: "Total Tracks From Playlists",
-          value: totalTracks,
+          //value: totalTracks,
+          value: 100,
           //value: 12,
           //percentage: "4.7%",
           increase: true,
