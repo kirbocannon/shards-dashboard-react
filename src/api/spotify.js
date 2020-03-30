@@ -75,7 +75,12 @@ const SpotifyApi = (function () {
   }
 
   Constr.prototype.generateAccessToken = function (reqType = null) {
-    // reqType accepts AUTHORIZED, NONAUTHORIZED, REFRESH
+    // user required to login to spotify at redirection and generate auth code
+    // auth code is used to get initial access token and refresh token
+    // refresh token (14-60 day) and temp access token are stored in local storage (bad)
+    // access token seems to last like 10 seconds
+    // refresh token used to get a new access token, right now at every API call a token is refreshed
+
     let authorized = false
     let refreshTokenExists = !!this.getRefreshToken()
     reqType = reqType.toUpperCase()
@@ -113,17 +118,7 @@ const SpotifyApi = (function () {
             },
             true
           )
-          // axios(gaOptions).then(response => {
-          //   this.setAuthorizedAccessToken(response.data.access_token)
-          //   // options = _buildOptions(
-          //   //   {grant_type: 'client_credentials'},
-          //   //   true
-          //   // )
-          // })
         } else {
-          // data.grant_type = 'authorization_code'
-          // data.redirect_uri = constants.SPOTIFY_AUTH_CALLBACK_URI // TODO: work on solid location on where to keep everything
-          // data.code = this.getAuthorizedCode()
           options = _buildOptions(
             {
               grant_type: 'authorization_code',
@@ -133,23 +128,7 @@ const SpotifyApi = (function () {
             true
           )
         }
-        // if (!refresh) {
-        //   authorized = true
-        //   data.grant_type = 'authorization_code'
-        //   data.redirect_uri = constants.SPOTIFY_AUTH_CALLBACK_URI // TODO: work on solid location on where to keep everything
-        //   data.code = this.getAuthorizedCode()
-        // } else {
-        //   data.grant_type = 'refresh_token' // TODO: prob don't need to cop a refresh token every time
-        //   data.refresh_token = this.getRefreshToken()
-        //   refresh = true
-        // }
         break;
-      // case 'REFRESH':
-      //   data.grant_type = 'refresh_token'
-      //   //data.refresh_token = _refreshToken
-      //   data.refresh_token = this.getRefreshToken()
-      //   refresh = true
-      //   break;
       default:
     }
 
@@ -164,20 +143,6 @@ const SpotifyApi = (function () {
             this.setRefreshToken(response.data.refresh_token)
           }
         }
-        // else if (authorized && !refreshTokenExists) {
-        //   this.setAuthorizedAccessToken(response.data.access_token)
-        //   this.setRefreshToken(response.data.refresh_token)
-        // }
-        // else if (authorized){
-        //   this.setAuthorizedAccessToken(response.data.access_token)
-        //   this.setRefreshToken(response.data.refresh_token)
-        //   localStorage.setItem('refreshToken', response.data.refresh_token)
-        // }
-        // else if (refresh) {
-        //   //console.log('yes', response.data.access_token)
-        //   this.setAuthorizedAccessToken(response.data.access_token)
-        //   this.setRefreshToken(response.data.refresh_token)
-        // }
       })
     )
   }
