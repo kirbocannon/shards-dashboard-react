@@ -1,0 +1,5 @@
+* Integrate redis to store OAUTH2 access token, refresh token and auth code
+* Build container (test and prod)
+* tweak redis conf file as needed (remove data persistence if there, not sure what's default)
+* Possible authentication/security hardening for redis
+* break out node server into separate repo or consider monorepo
