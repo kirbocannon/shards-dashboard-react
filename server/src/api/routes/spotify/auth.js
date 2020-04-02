@@ -28,9 +28,9 @@ router.get('/generateAccessToken', (req, res, next) => {
 // });
 
 router.post('/generateAccessToken-test', async (req, res, next) => {
-    console.log(req.body.authorized)
     const tokenResp = await spotifyApi.generateAccessToken(req.body.authorized)
-    // console.log(spotifyApi.getAccessToken())
+    const totalTracks = await spotifyApi.getSongCountFromPlaylists()
+    console.log(totalTracks)
     res.sendStatus(200);
 });
 

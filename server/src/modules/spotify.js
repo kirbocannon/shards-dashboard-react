@@ -10,12 +10,12 @@ const redis = redisModule.createClient();
 
 const { promisify } = require("util");
 
-redis.on("error", function(error) {
-  console.error(error);
-});
+// redisModule.on("error", function(error) {
+//   console.error(error);
+// });
 
 // convert .get to promise since everything is async
-const getAsync = promisify(redis.get).bind(redis);
+const redisGetAsync = promisify(redis.get).bind(redis);
 
 //getAsync.then(console.log).catch(console.error);
 
@@ -82,7 +82,7 @@ SpotifyApi.prototype._sendRequest = function (method, endpoint, data = {}, autho
   return (axios(options))
 }
 
-SpotifyApi.prototype._buildGenerateAccessTokenOptions = function(url, data, stringify=false) {
+SpotifyApi.prototype._buildGenerateAccessTokenOptions = function(data, stringify=false) {
   if (stringify) {
     data = qs.stringify(data)
   }
@@ -97,7 +97,7 @@ SpotifyApi.prototype._buildGenerateAccessTokenOptions = function(url, data, stri
   }
 }
 
-SpotifyApi.prototype.generateAccessToken = function (authorized = false) {
+SpotifyApi.prototype.generateAccessToken = async function (authorized = false) {
   // user required to login to spotify at redirection and generate auth code
   // auth code is used to get initial access token and refresh token
   // refresh token (14-60 day) and temp access token are stored in local storage (bad)
@@ -105,7 +105,7 @@ SpotifyApi.prototype.generateAccessToken = function (authorized = false) {
   // refresh token used to get a new access token, right now at every API call a token is refreshed
 
   //let authorized = false
-  let refreshTokenExists = !!this.getRefreshToken()
+  let refreshTokenExists = !!await this.getRefreshToken()
   let reqType = !authorized ? 'NONAUTHORIZED' : "AUTHORIZED"
   let options = {}
 
@@ -122,16 +122,16 @@ SpotifyApi.prototype.generateAccessToken = function (authorized = false) {
         options = this._buildGenerateAccessTokenOptions(
             {
               grant_type: 'refresh_token',
-              refresh_token: this.getRefreshToken()
+              refresh_token: await this.getRefreshToken()
             },
             true
         )
       } else {
-        options = _buildOptions(
+        options = this._buildGenerateAccessTokenOptions(
             {
               grant_type: 'authorization_code',
               redirect_uri: constants.SPOTIFY_AUTH_CALLBACK_URI, // TODO.txt: work on solid location on where to keep everything
-              code: this.getAuthorizedCode()
+              code: await this.getAuthorizedCode()
             },
             true
         )
@@ -155,7 +155,7 @@ SpotifyApi.prototype.generateAccessToken = function (authorized = false) {
   )
 }
 
-SpotifyApi.prototype.getPlaylists = function (limit = _limit, offset = 0) {
+SpotifyApi.prototype.getPlaylists = function (limit = this._limit, offset = 0) {
 
   return (this._sendRequest(
       'GET',
@@ -297,7 +297,9 @@ SpotifyApi.prototype.getAuthorizedCode = function () {
   //this._authorizedAccessToken = localStorage.getItem('SpotifyAuthCode');
   //return this._authorizedAccessToken
   //return localStorage.getItem('SpotifyAuthCode')
-  return redis.get(`auth.code:${this._userId}`);
+  //return redis.get(`auth.code:${this._userId}`, redis.print);
+  //return redis.get(`auth.code:${this._userId}`, (err, res) => {return res})
+  return redisGetAsync(`auth.code:${this._userId}`)
 };
 
 SpotifyApi.prototype.setAuthorizedCode = function (code) {

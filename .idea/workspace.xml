@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc00b1e7-bbed-4a36-a89c-b7ac05d62829" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TODO.txt" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/api/routes/spotify/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/api/routes/spotify/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/modules/spotify.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/modules/spotify.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/server.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,20 +17,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/src/modules/spotify.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="96" column="35" selection-start-line="96" selection-start-column="35" selection-end-line="96" selection-end-column="35" />
+            <state relative-caret-position="230">
+              <caret line="135" column="16" lean-forward="true" selection-start-line="135" selection-start-column="16" selection-end-line="135" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/src/api/routes/spotify/auth.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="31" column="4" lean-forward="true" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="4" />
+            <state relative-caret-position="377">
+              <caret line="31" column="30" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -42,8 +38,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TODO.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="56" selection-start-line="8" selection-start-column="56" selection-end-line="8" selection-end-column="56" />
+            <state relative-caret-position="135">
+              <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -65,8 +61,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/flux/stores/Songs.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="80" />
+            <state relative-caret-position="307">
+              <caret line="21" selection-start-line="21" selection-end-line="22" selection-end-column="28" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -94,18 +90,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>authorizedAccessToken</find>
-      <find>getAuthorizedAccessToken</find>
-      <find>_sendrequest</find>
-      <find>accessToken</find>
-      <find>generateA</find>
-      <find>playlists</find>
-      <find>authorize</find>
-      <find>code</find>
-      <find>.generateaccesstoken</find>
-      <find>setaccesstoken</find>
-      <find>protocol</find>
-      <find>scripts</find>
       <find>redis</find>
       <find>songstore</find>
       <find>this._authori</find>
@@ -123,7 +107,19 @@
       <find>url:</find>
       <find>generateacce</find>
       <find>_accessTokenUri</find>
+      <find>cons</find>
+      <find>getauthcod</find>
+      <find>generateaccesstoken</find>
+      <find>getauthorizedcode</find>
+      <find>generateaccesstoke</find>
+      <find>---</find>
+      <find>redis.get</find>
+      <find>console.log</find>
+      <find>getauthorizedco</find>
       <find>generateaccess</find>
+      <find>code:</find>
+      <find>code</find>
+      <find>getauthori</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -173,16 +169,16 @@
         <option value="$PROJECT_DIR$/client/src/flux/stores/Songs.js" />
         <option value="$PROJECT_DIR$/server/src/server.js" />
         <option value="$PROJECT_DIR$/TODO.txt" />
-        <option value="$PROJECT_DIR$/server/src/api/routes/spotify/auth.js" />
         <option value="$PROJECT_DIR$/server/src/modules/spotify.js" />
+        <option value="$PROJECT_DIR$/server/src/api/routes/spotify/auth.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="17" />
-    <option name="y" value="37" />
-    <option name="width" value="1648" />
-    <option name="height" value="951" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1685" />
+    <option name="y" value="27" />
+    <option name="width" value="1450" />
+    <option name="height" value="989" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -196,6 +192,17 @@
             <path>
               <item name="shards-dashboard-react" type="b2602c69:ProjectViewProjectNode" />
               <item name="shards-dashboard-react" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="shards-dashboard-react" type="b2602c69:ProjectViewProjectNode" />
+              <item name="shards-dashboard-react" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="shards-dashboard-react" type="b2602c69:ProjectViewProjectNode" />
+              <item name="shards-dashboard-react" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="shards-dashboard-react" type="b2602c69:ProjectViewProjectNode" />
@@ -302,13 +309,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="202058000" />
+    <option name="totallyTimeSpent" value="214432000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="24" width="1678" height="965" extended-state="6" />
+    <frame x="1685" y="27" width="1450" height="989" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2051901" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23792861" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -322,7 +329,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.3295099" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.35280642" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.34336677" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -652,20 +659,10 @@
     <entry file="file://$PROJECT_DIR$/server/src/server.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/flux/stores/Songs.js">
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="80" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TODO.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="56" selection-start-line="8" selection-start-column="56" selection-end-line="8" selection-end-column="56" />
+        <state relative-caret-position="285">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
@@ -676,24 +673,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/TODO.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
+        <state relative-caret-position="135">
+          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/api/routes/spotify/auth.js">
+    <entry file="file://$PROJECT_DIR$/client/src/flux/stores/Songs.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="31" column="4" lean-forward="true" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="4" />
+        <state relative-caret-position="307">
+          <caret line="21" selection-start-line="21" selection-end-line="22" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/src/modules/spotify.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="96" column="35" selection-start-line="96" selection-start-column="35" selection-end-line="96" selection-end-column="35" />
+        <state relative-caret-position="230">
+          <caret line="135" column="16" lean-forward="true" selection-start-line="135" selection-start-column="16" selection-end-line="135" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/api/routes/spotify/auth.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="31" column="30" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
         </state>
       </provider>
     </entry>
