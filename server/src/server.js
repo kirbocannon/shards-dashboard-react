@@ -1,20 +1,8 @@
-const constants = require('./config/constants')
-
 const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
 const port = process.env.PORT || 5000;
-
-const SpotifyApi = require("./modules/spotify")
-
-const spotifyApi = new SpotifyApi()
-
-spotifyApi.setCredentials(
-    constants.SPOTIFY_USERID,
-    constants.SPOTIFY_USERNAME,
-    constants.SPOTIFY_PASSWORD
-)
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

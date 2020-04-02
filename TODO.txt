@@ -6,3 +6,4 @@
 * add logging middleware for nodejs server (morgan)
 * add error handling middleware for nodejs server
 * Possibly convert spotify api to class syntax
+* structure redis data better - look into sets and lists

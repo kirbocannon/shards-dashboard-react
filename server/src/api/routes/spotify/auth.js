@@ -1,5 +1,16 @@
+const constants = require('../../../config/constants')
+
 const router = require("express").Router()
 
+const SpotifyApi = require("../../../modules/spotify")
+
+const spotifyApi = new SpotifyApi()
+
+spotifyApi.setCredentials(
+    constants.SPOTIFY_USERID,
+    constants.SPOTIFY_USERNAME,
+    constants.SPOTIFY_PASSWORD
+)
 
 router.get('/', (req, res, next) => {
     res.status(200).json({
@@ -7,6 +18,20 @@ router.get('/', (req, res, next) => {
     })
 })
 
+router.get('/generateAccessToken', (req, res, next) => {
+    res.status(200).json(spotifyApi.getCredentials())
+})
 
+// router.post('/post-test', (req, res, next) => {
+//     console.log('Got body:', req.body);
+//     res.sendStatus(200);
+// });
 
-module.exports = router
+router.post('/generateAccessToken-test', async (req, res, next) => {
+    console.log(req.body.authorized)
+    const tokenResp = await spotifyApi.generateAccessToken(req.body.authorized)
+    // console.log(spotifyApi.getAccessToken())
+    res.sendStatus(200);
+});
+
+module.exports = router;
