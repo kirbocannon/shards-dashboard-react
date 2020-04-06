@@ -8,3 +8,5 @@
 * Possibly convert spotify api to class syntax
 * structure redis data better - look into sets and lists
 * configure redis to use a unix socket
+* need to generate authorized code - right now just storing original one
+* react drag and drop (dnd) to drag and drop songs or something else
