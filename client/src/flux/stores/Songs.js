@@ -5,6 +5,8 @@ import Dispatcher from "../dispatcher";
 import constants from "../constants"
 import SpotifyApi from "../../api/spotify"
 
+const axios = require('axios').default
+
 
 class SongStore extends EventEmitter {
   constructor() {
@@ -18,16 +20,21 @@ class SongStore extends EventEmitter {
   }
 
   async getAll() {
-    const tokenResp = await this.spotifyApi.generateAccessToken('nonauthorized')
-    const totalTracks = await this.spotifyApi.getSongCountFromPlaylists()
-    console.log(totalTracks)
+    // const tokenResp = await this.spotifyApi.generateAccessToken('nonauthorized')
+    // const totalTracks = await this.spotifyApi.getSongCountFromPlaylists()
+    // console.log(totalTracks)
+    //
+    // const authToken = await this.spotifyApi.generateAccessToken('authorized')
+    // console.log(this.spotifyApi.getAuthorizedAccessToken(), 'trying to in songs')
+    // // //
+    // // // //const tracks = await spotifyApi.getAllTracks()
+    // const tracks = await this.spotifyApi._getTracks()
+    // console.log(tracks)
 
-    const authToken = await this.spotifyApi.generateAccessToken('authorized')
-    console.log(this.spotifyApi.getAuthorizedAccessToken(), 'trying to in songs')
-    // //
-    // // //const tracks = await spotifyApi.getAllTracks()
-    const tracks = await this.spotifyApi._getTracks()
-    console.log(tracks)
+    axios.post('spotify/auth/generate-access-token', {authorized: true})
+      .then(function (response) {
+        console.log(response);
+      })
 
     // const response = await fetch('/api/hello');
     // const body = await response.json();

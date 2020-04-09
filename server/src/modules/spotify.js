@@ -26,9 +26,6 @@ function SpotifyApi() {
   this._baseUri = 'https://api.spotify.com/v1'
   this._accessTokenUri = 'https://accounts.spotify.com/api/token'
   this._authTokenUri = 'https://accounts.spotify.com/authorize'
-  this._accessToken = String()
-  this._authorizedAccessToken = String();
-  this._refreshToken = String();
   this._userId = String();
   this._username = String();
   this._userPassword = String();
@@ -220,15 +217,19 @@ SpotifyApi.prototype._getAllNextItems = async function (funcName) {
 
 }
 
-SpotifyApi.prototype._getTracks = async function (limit = this._limit, offset = 0) {
+SpotifyApi.prototype.getTracks = async function (limit = this._limit, offset = 0) {
   //method, endpoint, data = {}, authorized = false, externalURL = false
-  return this._sendRequest(
+  const res = await this._sendRequest(
       'GET',
       `me/tracks?limit=${limit}&offset=${offset}`,
       {},
       true,
       false
   )
+
+
+
+  return res.data
 }
 
 SpotifyApi.prototype.authorize = async function (username, scope, redirectURI) {
@@ -242,7 +243,6 @@ SpotifyApi.prototype.authorize = async function (username, scope, redirectURI) {
       '&redirect_uri=' + redirectURI,
       {},
       true,
-      null,
       true
   )
 }
@@ -276,55 +276,35 @@ SpotifyApi.prototype.getCredentials = function () {
 };
 
 SpotifyApi.prototype.getAccessToken = function () {
-  //return this._accessToken
   return redisGetAsync(`auth.accesstoken:${this._userId}`)
 };
 
 SpotifyApi.prototype.setAccessToken = function (accessToken) {
-  //this._accessToken = accessToken;
   return redis.set(`auth.accesstoken:${this._userId}`, accessToken)
 };
 
 SpotifyApi.prototype.getRefreshToken = function () {
-  //return localStorage.getItem('refreshToken')
-  //return this._refreshToken
   return redisGetAsync(`auth.refreshtoken:${this._userId}`)
 };
 
 SpotifyApi.prototype.setRefreshToken = function (refreshToken) {
-  //this._refreshToken = refreshToken;
-  //localStorage.setItem('refreshToken', refreshToken)
   return redis.set(`auth.refreshtoken:${this._userId}`, refreshToken)
 
 };
 
 SpotifyApi.prototype.getAuthorizedCode = function () {
-  //this._authorizedAccessToken = localStorage.getItem('SpotifyAuthCode');
-  //return this._authorizedAccessToken
-  //return localStorage.getItem('SpotifyAuthCode')
-  //return redis.get(`auth.code:${this._userId}`, redis.print);
-  //return redis.get(`auth.code:${this._userId}`, (err, res) => {return res})
   return redisGetAsync(`auth.code:${this._userId}`)
 };
 
 SpotifyApi.prototype.setAuthorizedCode = function (code) {
-  //this._authorizedAccessToken = localStorage.getItem('SpotifyAuthCode');
-  //return this._authorizedAccessToken
-  //return localStorage.setItem('SpotifyAuthCode', code)
   redis.set(`auth.code:${this._userId}`, code);
 };
 
 SpotifyApi.prototype.getAuthorizedAccessToken = function () {
-  //return localStorage.getItem('authorizedAccessToken')
-  //return this._authorizedAccessToken
   return redisGetAsync(`auth.accesstoken:${this._userId}`)
 };
 
 SpotifyApi.prototype.setAuthorizedAccessToken = function (authorizedAccessToken) {
-  //this._authorizedAccessToken = localStorage.getItem('SpotifyAuthCode');
-  //localStorage.setItem('authorizedAccessToken', authorizedAccessToken)
-  //this._authorizedAccessToken = authorizedAccessToken
-  //return this._authorizedAccessToken
   return redis.set(`auth.accesstoken:${this._userId}`, authorizedAccessToken)
 };
 

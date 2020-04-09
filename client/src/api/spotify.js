@@ -10,6 +10,7 @@ const SpotifyApi = (function () {
   const _baseUri = 'https://api.spotify.com/v1'
   const _accessTokenUri = 'https://accounts.spotify.com/api/token'
   const _authTokenUri = 'https://accounts.spotify.com/authorize'
+  const _limit = constants.SPOTIFY_LIMIT
 
   let _accessToken = String()
   let _authorizedAccessToken = String();
@@ -17,7 +18,6 @@ const SpotifyApi = (function () {
   let _userId = String();
   let _username = String();
   let _userPassword = String();
-  const _limit = constants.SPOTIFY_LIMIT
 
 
   const Constr = function () {
