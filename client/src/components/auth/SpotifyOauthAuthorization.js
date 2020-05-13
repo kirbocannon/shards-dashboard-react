@@ -7,6 +7,8 @@ import SongStore from "../../flux/stores/Songs";
 import SpotifyApi from "../../api/spotify"
 import {Redirect, Route} from "react-router-dom";
 
+const axios = require('axios').default
+
 
 class SpotifyOauthAuthorization extends React.Component {
   constructor(props) {
@@ -38,14 +40,16 @@ class SpotifyOauthAuthorization extends React.Component {
     // this.spotifyApi.authorize(
     //   constants.SPOTIFY_USERNAME,
     //   'user-library-read',
-    //   `${constants.SPOTIFY_REDIRECT_URI}`).then(response => {
+    //   `${constants.SPOTIFY_AUTH_CALLBACK_URI}`).then(response => {
     //   this.setState({redirectURL: response.request.responseURL})
     // })
-    this.spotifyApi.authorize(
-      constants.SPOTIFY_USERNAME,
-      'user-library-read',
-      `${constants.SPOTIFY_AUTH_CALLBACK_URI}`).then(response => {
-      this.setState({redirectURL: response.request.responseURL})
+
+    axios.post('spotify/auth/generate-auth-code', {
+      username: constants.SPOTIFY_USERNAME,
+      scope: "user-library-read",
+      callbackUri: constants.SPOTIFY_AUTH_CALLBACK_URI
+    }).then(response => {
+      this.setState({responseUrl: response.data.responseUrl})
     })
   }
 
@@ -55,16 +59,16 @@ class SpotifyOauthAuthorization extends React.Component {
     return (
       <>
         <Button variant="primary" onClick={this.handleShow}>
-          Launch demo modal
+          Cop auth code
         </Button>
 
         {this.state.show ?
 
           <Route path='/blog-overview' component={() => {
             //window.location.href = this.state.redirectURL
-            SpotifyOauthAuthorization.popupWindow(`${this.state.redirectURL}`, 'Spotify Login', window, 1000, 750)
+            SpotifyOauthAuthorization.popupWindow(`${this.state.responseUrl}`, 'Spotify Login', window, 1000, 750)
             return null;
-          }}/> : 'hello'
+          }}/> : ''
 
         }
       </>

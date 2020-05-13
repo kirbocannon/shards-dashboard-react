@@ -3,7 +3,7 @@ import { EventEmitter } from "events";
 import Dispatcher from "../dispatcher";
 
 import constants from "../constants"
-import SpotifyApi from "../../api/spotify"
+//import SpotifyApi from "../../api/spotify"
 
 const axios = require('axios').default
 
@@ -11,12 +11,12 @@ const axios = require('axios').default
 class SongStore extends EventEmitter {
   constructor() {
     super()
-    this.spotifyApi = new SpotifyApi()
-    this.spotifyApi.setCredentials(
-      constants.SPOTIFY_USERID,
-      constants.SPOTIFY_USERNAME,
-      constants.SPOTIFY_PASSWORD
-    )
+    // this.spotifyApi = new SpotifyApi()
+    // this.spotifyApi.setCredentials(
+    //   constants.SPOTIFY_USERID,
+    //   constants.SPOTIFY_USERNAME,
+    //   constants.SPOTIFY_PASSWORD
+    // )
   }
 
   async getAll() {

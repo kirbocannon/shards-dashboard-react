@@ -57,6 +57,9 @@ class SongOverview extends React.Component {
         <Row>
           <SpotifyOauthAuthorization/>
         </Row>
+        <Row>
+          Add other elements here
+        </Row>
       </Container>
     )
   }

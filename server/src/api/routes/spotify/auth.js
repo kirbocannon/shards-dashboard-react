@@ -1,16 +1,20 @@
-const constants = require('../../../config/constants')
+//const constants = require('../../../config/constants')
 
 const router = require("express").Router()
 
-const SpotifyApi = require("../../../modules/spotify")
+//const { spotifyApi } = require('../../../server');
 
-const spotifyApi = new SpotifyApi()
+// const SpotifyApi = require("../../../modules/spotify")
+//
+// const spotifyApi = new SpotifyApi()
+//
+// spotifyApi.setCredentials(
+//     constants.SPOTIFY_USERID,
+//     constants.SPOTIFY_USERNAME,
+//     constants.SPOTIFY_PASSWORD
+// )
 
-spotifyApi.setCredentials(
-    constants.SPOTIFY_USERID,
-    constants.SPOTIFY_USERNAME,
-    constants.SPOTIFY_PASSWORD
-)
+const {spotifyApi} = require('../../../server')
 
 router.post('/generate-access-token', async (req, res, next) => {
     await spotifyApi.generateAccessToken(req.body.authorized)
@@ -18,6 +22,20 @@ router.post('/generate-access-token', async (req, res, next) => {
     //console.log(a, 'trying in songs')
     // const totalTracks = await spotifyApi.getSongCountFromPlaylists()
     // console.log(totalTracks)
+    res.sendStatus(200);
+});
+
+router.post('/generate-auth-code', async (req, res, next) => {
+    const authCode = await spotifyApi.authorize(
+        req.body.username,
+        req.body.scope,
+        req.body.callbackUri
+        )
+    res.json({responseUrl: authCode.request.res.responseUrl});
+});
+
+router.post('/set-auth-code', function (req, res, next) {
+    spotifyApi.setAuthorizedCode(req.body.authCode)
     res.sendStatus(200);
 });
 

@@ -65,7 +65,7 @@ SpotifyApi.prototype._buildRequest = async function (method, endpoint, data = {}
     options.data = qs.stringify(data)
   }
 
-  console.log(options)
+  //console.log(options)
 
   return options
 
@@ -232,7 +232,7 @@ SpotifyApi.prototype.getTracks = async function (limit = this._limit, offset = 0
   return res.data
 }
 
-SpotifyApi.prototype.authorize = async function (username, scope, redirectURI) {
+SpotifyApi.prototype.authorize = async function (username, scope, callbackUri) {
 
   return this._sendRequest(
       'GET',
@@ -240,7 +240,7 @@ SpotifyApi.prototype.authorize = async function (username, scope, redirectURI) {
       '?client_id=' + username +
       '&response_type=code' +
       '&scope=' + scope +
-      '&redirect_uri=' + redirectURI,
+      '&redirect_uri=' + callbackUri,
       {},
       true,
       true
