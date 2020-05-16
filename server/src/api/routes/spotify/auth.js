@@ -34,14 +34,10 @@ router.post('/generate-auth-code', async (req, res, next) => {
     res.json({responseUrl: authCode.request.res.responseUrl});
 });
 
-router.post('/set-auth-code', function (req, res, next) {
-    spotifyApi.setAuthorizedCode(req.body.authCode)
+router.get('/set-auth-code', function (req, res, next) {
+    spotifyApi.setAuthorizedCode(req.query.authCode)
     res.sendStatus(200);
 });
 
-router.post('/tracks', async (req, res, next) => {
-    const tracks = await spotifyApi.getTracks()
-    res.json(tracks)
-});
 
 module.exports = router;

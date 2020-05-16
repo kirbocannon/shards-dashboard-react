@@ -40,14 +40,8 @@ class SongStore extends EventEmitter {
     // const body = await response.json();
     // console.log(body)
 
-
-    // const refreshToken = await this.spotifyApi.generateAccessToken('refresh')
-    // console.log('refresh token', refreshToken)
-
-    //const tracks = await spotifyApi.getSongsFromAllPlaylists()
-    //console.log(tracks.tracks, tracks.totalTrackCount)
-
-
+    const tracks = await axios.get('spotify/music/tracks')
+    console.log(tracks)
 
       return [
         {
