@@ -1,4 +1,6 @@
 const cors = require('cors')
+const feathers = require('@feathersjs/feathers')
+const feathersExpress= require('@feathersjs/express')
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -19,6 +21,11 @@ app.get('/api/hello', (req, res) => {
 //         `I received your POST request. This is what you sent me: ${req.body.post}`,
 //     );
 // });
+
+// enable feathers rest services
+// app.configure(feathersExpress.rest())
+
+
 
 const constants = require('./config/constants')
 

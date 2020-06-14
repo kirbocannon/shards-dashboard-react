@@ -36,11 +36,12 @@ class SongStore extends EventEmitter {
         console.log(response);
       })
 
-    // const response = await fetch('/api/hello');
-    // const body = await response.json();
-    // console.log(body)
-
     const tracks = await axios.get('spotify/music/tracks')
+
+    for (const [index, value] of tracks.data.items.entries()) {
+      console.log(value.track.name, value.track.popularity)
+    }
+
     console.log(tracks)
 
       return [
